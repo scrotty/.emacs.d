@@ -6,7 +6,7 @@
 (setup (:pkg browse-at-remote))
 
 (setup (:pkg browse-url-dwim)
-  (setq browse-url-browser-function 'browse-url-xdg-open)
+  (setq browse-url-browser-function 'my/html-open-link-in-brave)
   (setq browse-url-dwim-always-confirm-extraction nil))
 
 (setup (:pkg hydra))

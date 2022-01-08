@@ -112,4 +112,37 @@
                (message "File '%s' successfully renamed to '%s'" name
                         (file-name-nondirectory new-name))))))))
 
+(defun my/html-open-link-in-brave (&optional @fullpath &rest dummy)
+  "open url under cursor in Brave browser. Work in Mac OS only Version 2019-02-17"
+  (interactive)
+  (let ($path)
+    (if @fullpath
+        (progn (setq $path @fullpath))
+      (let (($inputStr
+             (if (use-region-p)
+                 (buffer-substring-no-properties (region-beginning) (region-end))
+               (let ($p0 $p1 $p2
+                         ($pathStops "^  \t\n\"`'‘’“”|[]{}「」<>〔〕〈〉《》【】〖〗«»‹›❮❯❬❭〘〙·。\\"))
+                 (setq $p0 (point))
+                 (skip-chars-backward $pathStops)
+                 (setq $p1 (point))
+                 (goto-char $p0)
+                 (skip-chars-forward $pathStops)
+                 (setq $p2 (point))
+                 (goto-char $p0)
+                 (buffer-substring-no-properties $p1 $p2)))))
+        (setq $path (replace-regexp-in-string
+                     "^file:///" "/"
+                     (replace-regexp-in-string
+                      ":\\'" "" $inputStr)))))
+    (cond
+     ((string-equal system-type "darwin")
+      (shell-command (format "open -a 'Brave Browser.app' \"%s\"" $path)))
+     ((string-equal system-type "windows-nt")
+      ;; "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" 2019-11-09
+      (let ((process-connection-type nil))
+        (start-process "" nil "powershell" "start-process" "brave" $path )))
+     ((string-equal system-type "gnu/linux")
+      (shell-command (format "brave \"%s\"" $path))))))
+
 (provide 'my-util)
