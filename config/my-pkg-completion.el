@@ -78,10 +78,27 @@
   (setq completion-styles '(orderless)))
 
 (setup (:pkg (vertico :files (:defaults "extensions/*")))
-  (:also-load vertico-repeat)
+  (:also-load vertico-repeat vertico-reverse vertico-grid vertico-quick vertico-buffer vertico-multiform)
   (setq vertico-count 15)
   (setq vertico-resize t)
+  (setq vertico-multiform-categories
+        '((file grid reverse)
+          (consult-location buffer)
+          (minor-mode reverse)
+          (imenu buffer)
+          (t unobtrusive)))
+  (defun vertico-quick-embark (&optional arg)
+    "Embark on candidate using quick keys."
+    (interactive)
+    (when (vertico-quick-jump)
+      (embark-act arg)))
+  (:with-map vertico-map
+    (:bind
+     "s-<return>" vertico-unobtrusive-mode
+     "s-l" vertico-quick-exit
+     "s-e" vertico-quick-embark))
   (vertico-mode 1)
+  (vertico-multiform-mode 1)
   (:with-hook minibuffer-setup-hook
     (:hook vertico-repeat-save)))
 

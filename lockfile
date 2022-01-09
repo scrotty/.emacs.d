@@ -107,7 +107,7 @@
  ("transient" . "129c2b1685368757ffe2b6fb2d57da4b06330968")
  ("ucs-utils" . "cbfd42f822bf5717934fa2d92060e6e24a813433")
  ("unicode-fonts" . "47f2397ade28eba621baa865fd69e4efb71407a5")
- ("vertico" . "0b2fd4832ce94ea985994847154d3b77f4b47fe7")
+ ("vertico" . "23a907ff8c9da4f8bf2e9043cde3d7df9ed1a9e1")
  ("whitespace-cleanup-mode" . "b108b73ddf8f7e747d5a20a681560171e02ad037")
  ("with-editor" . "388a2b8bf5aaf2e5ceb713a0ca002f815648100f"))
 :beta

@@ -5,12 +5,16 @@
   (:hide-mode))
 
 (setup (:pkg avy)
-  (setq avy-all-windows nil)
+  (setq avy-all-windows t)
   (setq avy-background t)
   (setq avy-keys (nconc (number-sequence ?a ?z)
                         (number-sequence ?A ?Z)
                         (number-sequence ?1 ?9)))
-  (setq avy-style 'pre))
+  (setq avy-style 'pre)
+  (defun avy-action-mark-to-char (pt)
+    (activate-mark)
+    (goto-char pt))
+  (setf (alist-get ?  avy-dispatch-alist) 'avy-action-mark-to-char))
 
 (setup (:pkg evil)
   (setq evil-move-beyond-eol t)

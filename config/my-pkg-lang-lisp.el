@@ -74,6 +74,7 @@
   "b" '(sp-forward-barf-sexp :wk "barf forward")
   "B" '(sp-backward-barf-sexp :wk "barf backward")
   "c" '(sp-convolute-sexp :wk "convolute")
+  "d" '(sp-kill-sexp :wk "kill sexp")
   "e" '(sp-splice-sexp-killing-backward :wk "splice killing backward")
   "E" '(sp-splice-sexp-killing-forward :wk "splice killing forward")
   "j" '(sp-join-sexp :wk "join")
@@ -82,7 +83,8 @@
   "S" '(sp-backward-slurp-sexp :wk "slurp backward")
   "t" '(sp-transpose-sexp :wk "transpose")
   "w" '(sp-wrap-round :wk "wrap")
-  "W" '(sp-unwrap-sexp :wk "unwrap"))
+  "W" '(sp-unwrap-sexp :wk "unwrap")
+  "y" '(sp-copy-sexp :wk "yank"))
 
 (define-local-keys (lisp-mode-map emacs-lisp-mode-map)
   "m" '(macrostep-expand :wk "macro expand"))
