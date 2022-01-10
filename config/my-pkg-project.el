@@ -23,6 +23,12 @@
   (setq transient-values
         '((magit-log:magit-log-mode "--graph" "--color" "--decorate"))))
 
+(setup (:pkg forge)
+  (:load-after magit)
+  (setq epa-pinentry-mode 'loopback
+        ;; github.user "scrotty"
+        auth-sources '("~/.authinfo.gpg")))
+
 (setup magit-wip
   (:load-after magit
     (magit-wip-mode 1)
