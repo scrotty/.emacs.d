@@ -23,6 +23,11 @@
   (setq transient-values
         '((magit-log:magit-log-mode "--graph" "--color" "--decorate"))))
 
+(setup (:pkg transient)
+  (:load-after magit
+    (setq transient-show-popup 2.0)
+    (transient-bind-q-to-quit)))
+
 (setup (:pkg forge)
   (:load-after magit)
   (setq epa-pinentry-mode 'loopback

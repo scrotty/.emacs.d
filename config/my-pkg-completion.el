@@ -35,6 +35,37 @@
                      #'completion--in-region)
                    args)))))
 
+(setup (:pkg consult-dir)
+  (:load-after (consult)
+    (defun consult-dir-maybe ()
+      (interactive)
+      (let* ((full-category (completion-metadata-get (embark--metadata) 'category))
+             (category (pcase full-category
+                         ('consult-multi (car (get-text-property
+                                               0 'consult-multi
+                                               (vertico--candidate))))
+                         (_ full-category))))
+        (if (member category '(file))
+            (call-interactively #'consult-dir)
+          (call-interactively (lookup-key global-map (kbd "C-M-d"))))))
+    (:global-bind
+     "C-x C-d" consult-dir)
+    (:with-map minibuffer-local-completion-map
+      (:bind
+       "C-M-d" consult-dir-maybe
+       "H-M-d" consult-dir-maybe
+       "C-M-j" consult-dir-jump-file
+       "M-s f" consult-dir-jump-file
+       "H-M-j" consult-dir-jump-file))
+    (:with-map vertico-map
+      (:bind
+       "C-M-d" consult-dir-maybe
+       "H-M-d" consult-dir-maybe
+       "M-s f" consult-dir-jump-file
+       "C-M-j" consult-dir-jump-file
+       "H-M-j" consult-dir-jump-file))
+    ))
+
 (setup (:pkg embark)
   (:load-after which-key
     (defun embark-which-key-indicator ()
@@ -78,15 +109,50 @@
   (setq completion-styles '(orderless)))
 
 (setup (:pkg (vertico :files (:defaults "extensions/*")))
-  (:also-load vertico-repeat vertico-reverse vertico-grid vertico-quick vertico-buffer vertico-multiform)
-  (setq vertico-count 15)
-  (setq vertico-resize t)
+  (:also-load vertico-repeat vertico-reverse vertico-grid vertico-quick vertico-buffer vertico-multiform vertico-unobtrusive vertico-flat)
+
+  ;; Vertico-grid
+
+  (define-minor-mode my/vertico-grid-mode
+    "Vertico-grid display with modified row count."
+    :global t :group 'vertico
+    (cond
+     (my/vertico-grid-mode
+      (setq my/vertico-count-orig vertico-count)
+      (setq vertico-count 4)
+      (vertico-grid-mode 1))
+     (t (vertico-grid-mode 0)
+        (setq vertico-count my/vertico-count-orig))))
+  (setq vertico-grid-separator "    ")
+  (setq vertico-grid-lookahead 50)
+
+  ;; Vertico-multiform
   (setq vertico-multiform-categories
-        '((file grid reverse)
-          (consult-location buffer)
-          (minor-mode reverse)
+        '((file my/vertico-grid-mode reverse)
+          (project-file my/vertico-grid-mode reverse)
           (imenu buffer)
+          (consult-location buffer)
+          (consult-grep buffer)
+          (notmuch-result reverse)
+          (minor-mode reverse)
+          (reftex-label reverse)
+          (bib-reference reverse)
           (t unobtrusive)))
+  (setq vertico-multiform-commands
+        '((load-theme my/vertico-grid-mode reverse)
+          (my/toggle-theme my/vertico-grid-mode reverse)
+          (consult-dir-maybe reverse)
+          (consult-dir reverse)
+          (consult-history reverse)
+          (consult-completion-in-region reverse)
+          (completion-at-point reverse)
+          (org-roam-node-find reverse)
+          (embark-completing-read-prompter reverse)
+          (embark-act-with-completing-read reverse)
+          (embark-prefix-help-command reverse)
+          (tmm-menubar reverse)))
+
+  ;; Vertico-quick
   (defun vertico-quick-embark (&optional arg)
     "Embark on candidate using quick keys."
     (interactive)
@@ -97,6 +163,14 @@
      "s-<return>" vertico-unobtrusive-mode
      "s-l" vertico-quick-exit
      "s-e" vertico-quick-embark))
+
+  ;; Vertico base
+  (setq vertico-buffer-display-action 'display-buffer-reuse-window)
+
+  ;; Vertico base
+  (setq vertico-count 15)
+  (setq vertico-cycle t)
+  (setq vertico-resize t)
   (vertico-mode 1)
   (vertico-multiform-mode 1)
   (:with-hook minibuffer-setup-hook

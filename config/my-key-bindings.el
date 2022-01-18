@@ -140,9 +140,11 @@
   "b" '(consult-line :wk "search buffer")
   "B" `(,(fn! (consult-line (thing-at-point 'symbol)))
         :wk "search buffer for symbol at point")
+  "c" `(,(fn! (call-interactively 'write-file)) :wk "copy")
   "d" `(,(fn! (consult-ripgrep default-directory)) :wk "search directory")
   "m" '(evil-multiedit-match-all :wk "multi-edit")
-  "p" '(consult-ripgrep :wk "search project"))
+  "r" `(,(fn! (let ((current-prefix-arg 4))
+                (call-interactively 'consult-ripgrep))) :wk "ripgrep"))
 
 (define-leader-keys
   :infix "w"

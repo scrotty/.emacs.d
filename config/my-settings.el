@@ -19,13 +19,12 @@
   (setq-default display-line-numbers-widen t)
   (setq-default display-line-numbers-width 3)
   (setq-default indicate-buffer-boundaries nil)
-  (setq-default truncate-lines t)
+  (setq-default truncate-lines nil)
+  (setq-default visual-line-mode t)
   (:with-hook (prog-mode-hook text-mode-hook conf-mode-hook)
     (:hook (fn (display-line-numbers-mode 1))))
   (:with-hook (org-mode-hook)
-    (:hook (fn (display-line-numbers-mode 0))))
-  (:with-hook text-mode-hook
-    (:hook visual-line-mode)))
+    (:hook (fn (display-line-numbers-mode 0)))))
 
 (setup encoding
   (setq coding-system-for-read 'utf-8-unix)
