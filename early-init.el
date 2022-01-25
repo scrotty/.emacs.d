@@ -64,9 +64,9 @@
 ;; new path in our cache directory to the front. This effectively removes the
 ;; entry for the original ~/.emacs.d/eln-cache/ and any others that are
 ;; unwanted.
-(setq native-comp-eln-load-path
-      (cons (expand-file-name "eln-cache/" user-emacs-directory)
-            (last native-comp-eln-load-path)))
+;; (setq native-comp-eln-load-path
+;;      (cons (expand-file-name "eln-cache/" user-emacs-directory)
+;;            (last native-comp-eln-load-path)))
 
 ;;; ============================================================================
 ;;; Set up the package manager

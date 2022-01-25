@@ -10,6 +10,7 @@
     (setq org-id-locations-file (expand-file-name ".orgids" triage-path))
     (setq org-agenda-files
           (list triage-path archive-path gtd-path))
+    (setq org-log-done 'time)
 
     (setq org-todo-keyword-faces
           '(("TODO" :foreground "dodger blue" :weight bold)
@@ -20,7 +21,7 @@
             ("DONE" :foreground "forest green" :weight bold)
             ("CANCELLED" :foreground "forest green" :weight bold)))
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(i)" "|" "DONE(d)")
+          '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(i)" "|" "VERIFY(v)" "DONE(d)")
             (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
 
     (setq org-capture-templates

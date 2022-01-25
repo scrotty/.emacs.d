@@ -33,7 +33,8 @@
   (shackle-mode 1))
 
 (setup (:pkg windmove)
-  (windmove-default-keybindings))
+  ;; (windmove-default-keybindings)
+  )
 
 (setup (:pkg winner)
   (winner-mode 1))

@@ -30,7 +30,7 @@
   "SPC" '(execute-extended-command :wk t)
   "'" '(vertico-repeat :wk t)
   ";" '(eval-expression :wk t)
-  "u" '(universal-argument :wk t))
+  "U" '(universal-argument :wk t))
 
 (define-leader-keys
   :infix "a"
@@ -160,5 +160,10 @@
   "u" '(winner-undo :wk "undo")
   "U" '(winner-redo :wk "redo")
   "w" '(ace-window :wk "go to"))
+
+(define-leader-keys
+  :infix "u"
+  "" '(:ignore t :wk "ui")
+  "w" '(writeroom-mode :wk "writeroom toggle"))
 
 (provide 'my-key-bindings)

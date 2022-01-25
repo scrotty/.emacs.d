@@ -1,5 +1,10 @@
 ;;;; -*- lexical-binding: t; -*-
 
+(setup (:pkg writeroom-mode)
+  (:with-mode visual-fill-column)
+  (advice-add 'text-scale-adjust :after
+              #'visual-fill-column-adjust))
+
 (setup (:pkg all-the-icons)
   (:load-after marginalia
     (:pkg all-the-icons-completion)

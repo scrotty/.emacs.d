@@ -131,4 +131,8 @@
 (setup (:require visual-line-mode)
   (:hide-mode))
 
+(setup (:pkg lacarte)
+  (:global-bind
+   "s-." lacarte-execute-menu-command))
+
 (provide 'my-pkg-builtin)
